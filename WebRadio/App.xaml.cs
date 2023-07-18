@@ -23,7 +23,7 @@ namespace WebRadio
             // Create ControlWindow
             tbIcon = new TaskbarIcon
             {
-                IconSource = new BitmapImage(new Uri("pack://application:,,,/Assets/CheckIP.ico")),
+                IconSource = new BitmapImage(new Uri("pack://application:,,,/Assets/WebRadio.ico")),
                 ToolTipText = "WebRadio"
             };
             controlWindow = new ControlWindow

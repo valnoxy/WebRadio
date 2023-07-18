@@ -8,16 +8,17 @@
 		<UseWindowsForms>true</UseWindowsForms>
 		<Platforms>x64</Platforms>
 		<AssemblyName>WebRadio</AssemblyName>
+		<ApplicationIcon>Assets\WebRadio.ico</ApplicationIcon>
 		<Company>Exploitox</Company>
 		<Authors>valnoxy</Authors>
-		<Version>1.0.0.36</Version>
+		<Version>1.0.0.38</Version>
 		<Copyright>Copyright (c) 2018 - 2023 Exploitox. All rights reserved.</Copyright>
 		<PackageProjectUrl>https://github.com/valnoxy/webradio</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/valnoxy/webradio</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Assets\CheckIP.ico" />
+	  <None Remove="Assets\WebRadio.ico" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -29,7 +30,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Resource Include="Assets\CheckIP.ico" />
+		<Resource Include="Assets\WebRadio.ico" />
 	</ItemGroup>
 
 	<ItemGroup>

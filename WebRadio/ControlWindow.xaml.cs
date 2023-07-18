@@ -91,7 +91,7 @@ namespace WebRadio
                             State = DiscordRpc._currentSenderName,
                             Assets = new Assets
                             {
-                                LargeImageKey = "checkip",
+                                LargeImageKey = "webradio",
                                 SmallImageKey = "valnoxy"
                             }
                         });
@@ -173,7 +173,7 @@ namespace WebRadio
                     State = "No sender currently playing.",
                     Assets = new Assets
                     {
-                        LargeImageKey = "checkip",
+                        LargeImageKey = "webradio",
                         SmallImageKey = "valnoxy"
                     }
                 });
