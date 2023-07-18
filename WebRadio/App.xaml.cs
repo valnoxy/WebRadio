@@ -2,6 +2,7 @@
 using DiscordRPC.Logging;
 using Hardcodet.Wpf.TaskbarNotification;
 using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using WebRadio.Common;
@@ -15,9 +16,17 @@ namespace WebRadio
     {
         public static ControlWindow controlWindow;
         public static TaskbarIcon tbIcon;
+        public static Mutex mutex;
 
         public void Application_Startup(object sender, StartupEventArgs e)
         {
+            mutex = new Mutex(true, "valnoxyWebRadio", out var createdNew);
+            if (!createdNew)
+            {
+                MessageBox.Show("WebRadio is already open.");
+                return;
+            }
+
             ConfigManager.Initialize();
 
             // Create ControlWindow

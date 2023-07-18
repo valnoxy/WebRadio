@@ -3,6 +3,7 @@ using ManagedBass;
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -219,6 +220,7 @@ namespace WebRadio
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            App.mutex.ReleaseMutex();
             Application.Current.Shutdown();
         }
 
