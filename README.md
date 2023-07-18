@@ -12,7 +12,7 @@
    <br />
    <a href="https://github.com/valnoxy/webradio/issues">Report Bug</a>
    ·
-   <a href="https://github.com/valnoxy/webradio/releases">Download</a>
+   <a href="https://github.com/valnoxy/webradio/releases">Download now</a>
   </p>
 </p>
 </br>
@@ -22,11 +22,11 @@
 ## 🔔 About WebRadio
 WebRadio is a small application for playing web radio channels or streams.
 
-## 🖼️ Screenshots
-soon
+- Play different radio streams and save them to the favorites list
+- Discord integration, so your friends can see what music you are listening too
 
-## Download
-coming soon
+## 🖼️ Screenshots
+<img src="https://dl.exploitox.de/webradio/WebRadio_Screenshot1.png" width="350"> <img src="https://dl.exploitox.de/webradio/WebRadio_Screenshot2.png" width="350">
 
 ## 🙏 Libraries
 This project uses the following libraries:
