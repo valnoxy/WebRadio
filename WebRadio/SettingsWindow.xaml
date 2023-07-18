@@ -1,0 +1,147 @@
+﻿<ui:UiWindow x:Class="WebRadio.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WebRadio"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        WindowStartupLocation="CenterScreen"
+        ExtendsContentIntoTitleBar="True"
+        WindowBackdropType="Mica"
+        WindowCornerPreference="Round"
+        mc:Ignorable="d"
+        Title="WebRadio" 
+        MinHeight="640" MinWidth="800"
+        Height="640" Width="800">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Margin="12,0,12,12">
+            <StackPanel >
+                <ui:CardControl Icon="CalendarPerson24" Margin="0,5,0,5">
+                    <ui:CardControl.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock
+                                    FontSize="13"
+                                    FontWeight="Medium"
+                                    Text="Autostart" />
+                                <TextBlock
+                                    FontSize="13"
+                                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                    Text="Start WebRadio automatically when you sign in." />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <ui:ToggleSwitch x:Name="AutoStartSwitch" Click="AutoStartSwitch_OnClick"/>
+                            </StackPanel>
+                        </Grid>
+                    </ui:CardControl.Header>
+                </ui:CardControl>
+
+                <ui:CardControl Icon="Server24" Margin="0,0,0,5">
+                    <ui:CardControl.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock
+                                    FontSize="13"
+                                    FontWeight="Medium"
+                                    Text="Discord RPC" />
+                                <TextBlock
+                                    FontSize="13"
+                                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                    Text="Shows on Discord your current radio channel you are listening to." />
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <ui:ToggleSwitch x:Name="DiscordSwitch" Click="DiscordSwitch_OnClick"/>
+                            </StackPanel>
+                        </Grid>
+                    </ui:CardControl.Header>
+                </ui:CardControl>
+
+                <ui:CardExpander Icon="MusicNote220" IsExpanded="True">
+                    <ui:CardExpander.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock FontSize="13"
+                                       FontWeight="Medium"
+                                       Text="Stream List" />
+                                <TextBlock FontSize="13"
+                                       Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                       Text="A list of your favorite radio server." />
+                            </StackPanel>
+                        </Grid>
+                    </ui:CardExpander.Header>
+                    <StackPanel>
+                        <ListBox Height="280"
+                             ItemsSource="{Binding RadioList}"
+                             x:Name="RadioListBox"
+                             Margin="0,0,0,5">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock FontSize="13"
+                                                   FontWeight="Medium"
+                                                   Text="{Binding Name}" />
+                                        <TextBlock x:Name="Address"
+                                                   Text="{Binding Address}"
+                                                   Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                                   FontSize="13"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="85"/>
+                            </Grid.ColumnDefinitions>
+
+                            <ui:TextBox Grid.Column="0"
+                                        PlaceholderText="Radio Name"
+                                        x:Name="NameTextBox"/>
+                            <ui:TextBox Grid.Column="1" 
+                                        PlaceholderText="Address" 
+                                        x:Name="AddressTextBox"
+                                        Margin="5,0,0,0"/>
+
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <ui:Button Icon="Add20"
+                                           ToolTip="Add this Stream"
+                                           Height="35"
+                                           Margin="0,0,5,0"
+                                           x:Name="AddRadioBtn" Click="AddRadioBtn_Click"/>
+                                <ui:Button Icon="Delete16"
+                                           ToolTip="Remove this Stream"
+                                           Height="35"
+                                           x:Name="RemoveRadioBtn" Click="RemoveRadioBtn_Click"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </ui:CardExpander>
+            </StackPanel>
+        </ScrollViewer>
+
+        <ui:TitleBar
+            Title="WebRadio"
+            ShowMaximize="False"
+            ShowMinimize="False"
+            Grid.Row="0"/>
+    </Grid>
+</ui:UiWindow>

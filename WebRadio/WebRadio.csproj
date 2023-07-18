@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<UseWindowsForms>true</UseWindowsForms>
+		<Platforms>x64</Platforms>
+		<AssemblyName>WebRadio</AssemblyName>
+		<Company>Exploitox</Company>
+		<Authors>valnoxy</Authors>
+		<Version>1.0.0.36</Version>
+		<Copyright>Copyright (c) 2018 - 2023 Exploitox. All rights reserved.</Copyright>
+		<PackageProjectUrl>https://github.com/valnoxy/webradio</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/valnoxy/webradio</RepositoryUrl>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Assets\CheckIP.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="DiscordRichPresence" Version="1.1.4.20" />
+	  <PackageReference Include="Hardcodet.NotifyIcon.Wpf" Version="1.1.0" />
+	  <PackageReference Include="ManagedBass" Version="3.1.1" />
+	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	  <PackageReference Include="WPF-UI" Version="2.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Assets\CheckIP.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="bass.dll">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
+</Project>
