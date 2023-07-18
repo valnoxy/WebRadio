@@ -1,5 +1,7 @@
 # WebRadio
 
+<img align="right" src="https://dl.exploitox.de/webradio/WebRadio.png" alt="WebRadio Logo" width="150">
+
 [![Windows](https://img.shields.io/badge/Windows-WPF-blue)](https://github.com/valnoxy/checkip/tree/main/CheckIP.Windows)
 [![License](https://img.shields.io/badge/license-GNU%20General%20Public%20License-purple)](/LICENSE)
 [![Downloads](https://img.shields.io/github/downloads/valnoxy/webradio/total.svg)](https://github.com/valnoxy/webradio/releases)
