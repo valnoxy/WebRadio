@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName          "WebRadio"
-#define MyAppVersion       GetFileVersion('..\..\WebRadio\bin\x64\Release\WebRadio.exe')
+#define MyAppVersion       GetFileVersion('..\..\WebRadio\bin\Release\Publish\WebRadio.exe')
 #define MyAppPlatform      "64bit"
 #define MyAppPublisher     "Exploitox"
 #define MyAppURL           "https://github.com/valnoxy/WebRadio"
@@ -23,7 +23,7 @@ VersionInfoDescription={#MyAppName} Installer
 VersionInfoVersion={#MyAppVersion}
 VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion={#MyAppVersion}
-AppCopyright=Copyright � {#MyAppStartingYear} - {#MyAppEndingYear} {#MyAppPublisher}. All rights reserved.       
+AppCopyright=Copyright © {#MyAppStartingYear} - {#MyAppEndingYear} {#MyAppPublisher}. All rights reserved.       
 
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -58,7 +58,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\..\WebRadio\bin\x64\Release\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\WebRadio\bin\Release\Publish\*"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
