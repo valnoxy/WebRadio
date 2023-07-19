@@ -9,7 +9,6 @@ using System.Timers;
 using System.Windows;
 using WebRadio.Common;
 using Wpf.Ui.Common;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Button = System.Windows.Controls.Button;
 
 namespace WebRadio

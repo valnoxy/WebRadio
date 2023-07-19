@@ -24,7 +24,7 @@ namespace WebRadio
             if (!createdNew)
             {
                 MessageBox.Show("WebRadio is already open.");
-                return;
+                Application.Current.Shutdown();
             }
 
             ConfigManager.Initialize();
