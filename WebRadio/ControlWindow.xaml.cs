@@ -216,9 +216,14 @@ namespace WebRadio
                             var senderObj = ConfigManager.Config.RadioList.FirstOrDefault(r => r.Address == _streamUrl);
                             DiscordRpc._currentSenderName = senderObj!.Name;
                         }
-                        catch
+                        catch (Exception ex)
                         {
-                            Console.WriteLine("Failed to get sender name from list.");
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                var errorMessage = "Failed to get sender name from list: " + ex.Message;
+                                var messageUi = new MessageUi("WebRadio", errorMessage, "OK");
+                                messageUi.ShowDialog();
+                            });
                         }
                     }
                 }
@@ -227,7 +232,7 @@ namespace WebRadio
                     Console.WriteLine("Failed to start the stream.");
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        var errorMessage = "This stream is not supported.";
+                        var errorMessage = "Failed to fetch stream: This stream is not supported.";
                         var messageUi = new MessageUi("WebRadio", errorMessage, "OK");
                         messageUi.ShowDialog();
                     });
