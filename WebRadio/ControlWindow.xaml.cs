@@ -9,7 +9,6 @@ using System.Timers;
 using System.Windows;
 using WebRadio.Common;
 using Wpf.Ui.Controls;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Button = System.Windows.Controls.Button;
 
 namespace WebRadio
@@ -24,7 +23,7 @@ namespace WebRadio
         private string _title = string.Empty;
         private string _streamUrl = string.Empty;
         private bool _isPlaying;
-        private string? CurrentStatus { get; set; }
+        private double Volume { get; set; }
 
         public ControlWindow()
         {
@@ -37,6 +36,13 @@ namespace WebRadio
             }
             MetadataTimer = new Timer(3000);
             MetadataTimer.Elapsed += MetadataTimer_Elapsed!;
+            
+            // Set volume
+            Volume = ConfigManager.Config.Volume;
+            VolumeSlider.Value = Volume;
+            VolumeText.Text = $"{Volume}%";
+
+            // Load radio list
             ReloadRadioList();
         }
 
@@ -200,6 +206,9 @@ namespace WebRadio
                     Console.WriteLine("Stream started.");
                     _isPlaying = true;
 
+                    // Set current volume
+                    Bass.ChannelSetAttribute(_streamHandle, ChannelAttribute.Volume, Volume);
+
                     if (ConfigManager.Config.DiscordRPC)
                     {
                         try
@@ -229,6 +238,10 @@ namespace WebRadio
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
+            // Store the current volume in the config
+            ConfigManager.Config.Volume = Volume;
+            ConfigManager.SaveConfig();
+
             App.mutex.ReleaseMutex();
             Application.Current.Shutdown();
         }
@@ -243,6 +256,13 @@ namespace WebRadio
         {
             var aboutWindow = new AboutWindow();
             aboutWindow.ShowDialog();
+        }
+
+        private void VolumeSlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Volume = Math.Ceiling(e.NewValue);
+            VolumeText.Text = $"{Volume}%";
+            Bass.ChannelSetAttribute(_streamHandle, ChannelAttribute.Volume, Volume);
         }
     }
 }

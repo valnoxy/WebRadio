@@ -17,13 +17,13 @@
                            HorizontalAlignment="Stretch"
                            HorizontalContentAlignment="Left"/>
                 <ui:Card Padding="5" Margin="0,5,0,0">
-                    <Grid>
+                    <Grid Margin="5,0,5,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <Slider Grid.Column="0"/>
-                        <TextBlock Grid.Column="1" Text="0%" Margin="5,0,0,0"/>
+                        <Slider Grid.Column="0" x:Name="VolumeSlider" ValueChanged="VolumeSlider_OnValueChanged" Minimum="0" Maximum="100"/>
+                        <TextBlock Grid.Column="1" x:Name="VolumeText" Text="0%" TextAlignment="Right" Margin="10,0,0,0" Width="35"/>
                     </Grid>
                 </ui:Card>
                 <Separator Margin="0,5"/>

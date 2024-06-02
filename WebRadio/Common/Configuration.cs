@@ -10,6 +10,7 @@ namespace WebRadio.Common
         public bool AutoStart { get; set; }
         public bool DiscordRPC { get; set; }
         public List<Radio> RadioList { get; set; }
+        public double Volume { get; set; }
     }
 
     public class Radio
