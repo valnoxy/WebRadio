@@ -1,6 +1,4 @@
-﻿using DiscordRPC;
-using DiscordRPC.Logging;
-using Hardcodet.Wpf.TaskbarNotification;
+﻿using Hardcodet.Wpf.TaskbarNotification;
 using System;
 using System.Threading;
 using System.Windows;
@@ -23,8 +21,10 @@ namespace WebRadio
             mutex = new Mutex(true, "valnoxyWebRadio", out var createdNew);
             if (!createdNew)
             {
-                MessageBox.Show("WebRadio is already open.");
-                Application.Current.Shutdown();
+                var errorMessage = "WebRadio is already running!";
+                var messageUi = new MessageUi("WebRadio", errorMessage, "OK");
+                messageUi.ShowDialog();
+                Current.Shutdown();
             }
 
             ConfigManager.Initialize();
@@ -33,13 +33,14 @@ namespace WebRadio
             tbIcon = new TaskbarIcon
             {
                 IconSource = new BitmapImage(new Uri("pack://application:,,,/Assets/WebRadio.ico")),
-                ToolTipText = "WebRadio"
+                ToolTipText = "WebRadio",
             };
             controlWindow = new ControlWindow
             {
-                MinWidth = 400
+                MinWidth = 330,
+                MaxWidth = 330
             };
-            tbIcon.TrayPopup = controlWindow;
+            tbIcon.TrayPopup = controlWindow; 
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
         }
     }

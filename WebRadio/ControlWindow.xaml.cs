@@ -1,14 +1,15 @@
 ﻿using DiscordRPC;
 using ManagedBass;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using WebRadio.Common;
-using Wpf.Ui.Common;
+using Wpf.Ui.Controls;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Button = System.Windows.Controls.Button;
 
 namespace WebRadio
@@ -19,10 +20,11 @@ namespace WebRadio
     public partial class ControlWindow
     {
         private int _streamHandle;
-        public readonly System.Timers.Timer? MetadataTimer;
+        public readonly Timer? MetadataTimer;
         private string _title = string.Empty;
         private string _streamUrl = string.Empty;
         private bool _isPlaying;
+        private string? CurrentStatus { get; set; }
 
         public ControlWindow()
         {
@@ -33,7 +35,7 @@ namespace WebRadio
                 Console.WriteLine("Error while initializing ManagedBass");
                 return;
             }
-            MetadataTimer = new System.Timers.Timer(3000);
+            MetadataTimer = new Timer(3000);
             MetadataTimer.Elapsed += MetadataTimer_Elapsed!;
             ReloadRadioList();
         }
@@ -75,11 +77,11 @@ namespace WebRadio
                     if (title == _title && ConfigManager._DiscordRpcFirstRun == false) return;
 
                     _title = title;
-                    System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current.Dispatcher.Invoke(() =>
                     {
                         Console.WriteLine("Stream Title: " + _title);
                         PlayingButton.Content = _title;
-                        PlayingButton.Icon = SymbolRegular.Pause24;
+                        PlayingButton.Icon = new SymbolIcon(SymbolRegular.Pause24);
                         App.tbIcon.ToolTipText = _title;
                     });
 
@@ -139,7 +141,7 @@ namespace WebRadio
             playList.Children.Clear();
             foreach (var button in ConfigManager.Config.RadioList.Select(sender => new Wpf.Ui.Controls.Button()
                      {
-                         Icon = SymbolRegular.MusicNote2Play20,
+                         Icon = new SymbolIcon(SymbolRegular.MusicNote2Play20),
                          Content = sender.Name,
                          HorizontalAlignment = HorizontalAlignment.Stretch,
                          Margin = new Thickness(0, 0, 0, 5),
@@ -160,7 +162,7 @@ namespace WebRadio
 
             _title = string.Empty;
             PlayingButton.Content = "Not playing";
-            PlayingButton.Icon = SymbolRegular.Info24;
+            PlayingButton.Icon = new SymbolIcon(SymbolRegular.Info24);
 
             Console.WriteLine("Stream paused.");
             _isPlaying = false;
@@ -186,7 +188,9 @@ namespace WebRadio
             Console.WriteLine("Playing stream: " + _streamUrl);
             Task.Factory.StartNew(() =>
             {
-                _streamHandle = Bass.CreateStream(_streamUrl, 0, BassFlags.Default, null, IntPtr.Zero);
+                _streamHandle = Bass.CreateStream(_streamUrl, 0,
+                    BassFlags.StreamDownloadBlocks | BassFlags.StreamStatus | BassFlags.AutoFree, null,
+                    new IntPtr(0));
 
                 if (_streamHandle != 0)
                 {
@@ -212,6 +216,12 @@ namespace WebRadio
                 else
                 {
                     Console.WriteLine("Failed to start the stream.");
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        var errorMessage = "This stream is not supported.";
+                        var messageUi = new MessageUi("WebRadio", errorMessage, "OK");
+                        messageUi.ShowDialog();
+                    });
                     _isPlaying = false;
                 }
             });
