@@ -10,27 +10,56 @@
     <StackPanel>
         <Border BorderBrush="#38393c" Background="#202020" BorderThickness="1,1,1,1" CornerRadius="8,8,8,8">
             <StackPanel Margin="8">
-                <ui:Button x:Name="PlayingButton" 
-                           Icon="Info28" 
-                           Content="Not playing" 
-                           Click="PlayingButton_Click" 
-                           HorizontalAlignment="Stretch"
-                           HorizontalContentAlignment="Left"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ui:Button x:Name="PlayingButton"
+                               Grid.Column="0"
+                               Icon="{ui:SymbolIcon Info28}"
+                               Content="Not playing"
+                               Click="PlayingButton_Click"
+                               HorizontalAlignment="Stretch"
+                               HorizontalContentAlignment="Left"/>
+
+                    <ui:Button x:Name="PlayPauseButton"
+                               Grid.Column="1"
+                               Icon="{ui:SymbolIcon Play24}"
+                               ToolTip="Play"
+                               IsEnabled="False"
+                               Margin="5,0,0,0"
+                               Padding="10,7"
+                               Click="PlayingButton_Click"/>
+                </Grid>
+                <ui:Card Padding="5" Margin="0,5,0,0">
+                    <Grid Margin="5,0,5,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Slider Grid.Column="0" x:Name="VolumeSlider" ValueChanged="VolumeSlider_OnValueChanged"
+                                Minimum="0" Maximum="100" SmallChange="1" LargeChange="5"
+                                IsMoveToPointEnabled="True"/>
+                        <TextBlock Grid.Column="1" x:Name="VolumeText" Text="0%" TextAlignment="Right" Margin="10,0,0,0" Width="35"/>
+                    </Grid>
+                </ui:Card>
                 <Separator Margin="0,5"/>
 
                 <StackPanel x:Name="PlayList"/>
 
                 <Separator Margin="0,2,0,5"/>
-                <ui:Button Icon="Settings24"
+                <ui:Button Icon="{ui:SymbolIcon Settings24}"
                            Content="Settings"
                            HorizontalAlignment="Stretch"
                            HorizontalContentAlignment="Left" Click="SettingsButton_Click"/>
-                <ui:Button Icon="Info24"
+                <ui:Button Icon="{ui:SymbolIcon Info24}"
                            Content="About"
                            Margin="0,5,0,0"
                            HorizontalAlignment="Stretch"
                            HorizontalContentAlignment="Left" Click="AboutButton_Click"/>
-                <ui:Button Icon="ArrowExit20"
+                <ui:Button Icon="{ui:SymbolIcon ArrowExit20}"
                            Content="Close"
                            Margin="0,5,0,0"
                            HorizontalAlignment="Stretch"

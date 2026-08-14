@@ -1,4 +1,4 @@
-﻿<ui:UiWindow x:Class="WebRadio.AboutWindow"
+﻿<ui:FluentWindow x:Class="WebRadio.AboutWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,7 +18,11 @@
         <ui:TitleBar
             Title="WebRadio"
             ShowMaximize="False"
-            ShowMinimize="False"/>
+            ShowMinimize="False">
+            <ui:TitleBar.Icon>
+                <ui:ImageIcon Source="pack://application:,,,/Assets/WebRadio.ico"/>
+            </ui:TitleBar.Icon>
+        </ui:TitleBar>
 
         <Grid Margin="19,0,19,0">
             <Grid.RowDefinitions>
@@ -86,7 +90,7 @@
 
             <Grid Grid.Row="3" Margin="0,0,0,12">
                 <StackPanel>
-                    <ui:CardControl Icon="Info24" Margin="0,5,0,5">
+                    <ui:CardControl Icon="{ui:SymbolIcon Info24}" Margin="0,5,0,5">
                         <ui:CardControl.Header>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -117,4 +121,4 @@
         </Grid>
     </VirtualizingStackPanel>
 
-</ui:UiWindow>
+</ui:FluentWindow>
