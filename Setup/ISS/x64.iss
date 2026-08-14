@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName          "WebRadio"
-#define MyAppVersion       GetFileVersion('..\..\WebRadio\bin\Release\Publish\WebRadio.exe')
+#define MyAppVersion       GetVersionNumbersString('..\..\WebRadio\bin\Release\Publish\WebRadio.exe')
 #define MyAppPlatform      "64bit"
 #define MyAppPublisher     "Exploitox"
 #define MyAppURL           "https://github.com/valnoxy/WebRadio"
@@ -23,23 +23,25 @@ VersionInfoDescription={#MyAppName} Installer
 VersionInfoVersion={#MyAppVersion}
 VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion={#MyAppVersion}
-AppCopyright=Copyright © {#MyAppStartingYear} - {#MyAppEndingYear} {#MyAppPublisher}. All rights reserved.       
+VersionInfoCompany={#MyAppPublisher}
+AppCopyright=Copyright © {#MyAppStartingYear} - {#MyAppEndingYear} {#MyAppPublisher}. All rights reserved.
 
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 
-UninstallDisplayIcon={app}\WebRadio.exe
+UninstallDisplayIcon={app}\{#MyAppExeName}
 UninstallDisplayName={#MyAppName}
 AppPublisher={#MyAppPublisher}
 
 WizardStyle=modern
+SetupIconFile=..\..\WebRadio\Assets\WebRadio.ico
 ShowLanguageDialog=yes
 UsePreviousLanguage=no
-
-ArchitecturesInstallIn64BitMode=x64
-
-DefaultDirName={commonpf64}\{#MyAppPublisher}\{#MyAppName}
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+MinVersion=10.0
+DefaultDirName={autopf}\{#MyAppPublisher}\{#MyAppName}
 UsePreviousAppDir=yes
 DisableProgramGroupPage=yes
 LicenseFile=..\..\LICENSE.md
@@ -48,7 +50,7 @@ LicenseFile=..\..\LICENSE.md
 PrivilegesRequiredOverridesAllowed=commandline
 OutputDir=..\Output
 OutputBaseFilename=WebRadio_{#MyAppVersion}_x64
-Compression=lzma
+Compression=lzma2/ultra64
 SolidCompression=yes
 
 [Languages]
@@ -58,7 +60,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\..\WebRadio\bin\Release\Publish\*"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\WebRadio\bin\Release\Publish\*"; DestDir: "{app}"; Excludes: "*.pdb"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
@@ -66,7 +68,7 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent runasoriginaluser
 
 [Code]
 procedure DeleteAutoStartEntry;
@@ -79,14 +81,26 @@ end;
 
 procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
 var
-  ConfigPath: string;
+  ConfigDir, ConfigPath: string;
 begin
   if CurUninstallStep = usUninstall then
   begin
-    ConfigPath := ExpandConstant('{userappdata}\valnoxy\WebRadio\config.json');
-    if FileExists(ConfigPath) then
-      DeleteFile(ConfigPath);
-
     DeleteAutoStartEntry;
+
+    ConfigDir := ExpandConstant('{userappdata}\valnoxy\WebRadio');
+    ConfigPath := ConfigDir + '\config.json';
+    if not FileExists(ConfigPath) then
+      Exit;
+
+    if UninstallSilent then
+      Exit;
+
+    if MsgBox('Do you also want to remove your WebRadio settings and station list?',
+              mbConfirmation, MB_YESNO or MB_DEFBUTTON2) = IDYES then
+    begin
+      DeleteFile(ConfigPath);
+      RemoveDir(ConfigDir);
+      RemoveDir(ExpandConstant('{userappdata}\valnoxy'));
+    end;
   end;
 end;

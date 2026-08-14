@@ -1,4 +1,4 @@
-﻿<ui:FluentWindow x:Class="WebRadio.SettingsWindow"
+<ui:FluentWindow x:Class="WebRadio.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,139 +10,268 @@
         WindowBackdropType="Mica"
         WindowCornerPreference="Round"
         mc:Ignorable="d"
-        Title="WebRadio" 
-        MinHeight="645" MinWidth="800"
-        Height="645" Width="800">
+        Title="WebRadio"
+        MinHeight="620" MinWidth="700"
+        Height="780" Width="820">
 
-    <Grid>
+    <Grid Margin="16,0,16,16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <!-- Title bar -->
+            <RowDefinition Height="Auto" />
+            <!-- Page header -->
+            <RowDefinition Height="Auto" />
+            <!-- General settings -->
+            <RowDefinition Height="Auto" />
+            <!-- Stream list header -->
             <RowDefinition Height="*" />
+            <!-- Stream list -->
+            <RowDefinition Height="Auto" />
+            <!-- Editor -->
+            <RowDefinition Height="Auto" />
+            <!-- Status message -->
         </Grid.RowDefinitions>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="1" Margin="12,0,12,12">
-            <StackPanel>
-                <ui:CardControl Icon="{ui:SymbolIcon CalendarPerson24}" Margin="0,5,0,5">
-                    <ui:CardControl.Header>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                <TextBlock
-                                    FontSize="13"
-                                    FontWeight="Medium"
-                                    Text="Autostart" />
-                                <TextBlock
-                                    FontSize="13"
-                                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                                    Text="Start WebRadio automatically when you sign in." />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                <ui:ToggleSwitch x:Name="AutoStartSwitch" Click="AutoStartSwitch_OnClick"/>
-                            </StackPanel>
-                        </Grid>
-                    </ui:CardControl.Header>
-                </ui:CardControl>
+        <!-- Page header -->
+        <StackPanel Grid.Row="1">
+            <ui:TextBlock Text="Settings"
+                          FontTypography="Title"
+                          Margin="0,4,0,2" />
+            <ui:TextBlock Text="Configure WebRadio and manage your favourite stations."
+                          FontTypography="Body"
+                          Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                          Margin="0,0,0,14" />
+        </StackPanel>
 
-                <ui:CardControl Icon="{ui:SymbolIcon Server24}" Margin="0,0,0,5">
-                    <ui:CardControl.Header>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                <TextBlock
-                                    FontSize="13"
-                                    FontWeight="Medium"
-                                    Text="Discord RPC" />
-                                <TextBlock
-                                    FontSize="13"
-                                    Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                                    Text="Shows on Discord your current radio channel you are listening to." />
-                            </StackPanel>
-                            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                <ui:ToggleSwitch x:Name="DiscordSwitch" Click="DiscordSwitch_OnClick"/>
-                            </StackPanel>
-                        </Grid>
-                    </ui:CardControl.Header>
-                </ui:CardControl>
+        <!-- General -->
+        <StackPanel Grid.Row="2">
+            <ui:TextBlock Text="General"
+                          FontTypography="BodyStrong"
+                          Margin="0,0,0,8" />
 
-                <ui:CardExpander Icon="{ui:SymbolIcon MusicNote220}" IsExpanded="True">
-                    <ui:CardExpander.Header>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                <TextBlock FontSize="13"
-                                       FontWeight="Medium"
-                                       Text="Stream List" />
-                                <TextBlock FontSize="13"
-                                       Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                                       Text="A list of your favorite radio server." />
-                            </StackPanel>
-                        </Grid>
-                    </ui:CardExpander.Header>
-                    <StackPanel>
-                        <ui:Card Margin="0,0,0,5" Padding="5">
-                            <ui:ListView Height="280"
-                                         ItemsSource="{Binding RadioList}"
-                                         x:Name="RadioListBox">
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Margin="5,3,0,3">
-                                            <TextBlock FontSize="13"
-                                                       FontWeight="Medium"
-                                                       Text="{Binding Name}" />
-                                            <TextBlock x:Name="Address"
-                                                       Text="{Binding Address}"
-                                                       Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                                                       FontSize="13"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ui:ListView>
-                        </ui:Card>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="85"/>
-                            </Grid.ColumnDefinitions>
+            <ui:CardControl Icon="{ui:SymbolIcon CalendarPerson24}" Margin="0,0,0,5">
+                <ui:CardControl.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <ui:TextBlock FontTypography="Body"
+                                          FontWeight="Medium"
+                                          Text="Autostart" />
+                            <ui:TextBlock FontTypography="Body"
+                                          Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                          Text="Start WebRadio automatically when you sign in." />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <ui:ToggleSwitch x:Name="AutoStartSwitch" Click="AutoStartSwitch_OnClick"/>
+                        </StackPanel>
+                    </Grid>
+                </ui:CardControl.Header>
+            </ui:CardControl>
 
-                            <ui:TextBox Grid.Column="0"
-                                        PlaceholderText="Radio Name"
-                                        x:Name="NameTextBox"/>
-                            <ui:TextBox Grid.Column="1" 
-                                        PlaceholderText="Address" 
-                                        x:Name="AddressTextBox"
-                                        Margin="5,0,0,0"/>
+            <ui:CardControl Icon="{ui:SymbolIcon Server24}" Margin="0,0,0,5">
+                <ui:CardControl.Header>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <ui:TextBlock FontTypography="Body"
+                                          FontWeight="Medium"
+                                          Text="Discord Rich Presence" />
+                            <ui:TextBlock FontTypography="Body"
+                                          Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                          Text="Shows on Discord your current radio channel you are listening to." />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <ui:ToggleSwitch x:Name="DiscordSwitch" Click="DiscordSwitch_OnClick"/>
+                        </StackPanel>
+                    </Grid>
+                </ui:CardControl.Header>
+            </ui:CardControl>
+        </StackPanel>
 
-                            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                                <ui:Button Icon="{ui:SymbolIcon Add20}"
-                                           ToolTip="Add this Stream"
-                                           Height="35"
-                                           Margin="0,0,5,0"
-                                           x:Name="AddRadioBtn" Click="AddRadioBtn_Click"/>
-                                <ui:Button Icon="{ui:SymbolIcon Delete16}"
-                                           ToolTip="Remove this Stream"
-                                           Height="35"
-                                           x:Name="RemoveRadioBtn" Click="RemoveRadioBtn_Click"/>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </ui:CardExpander>
+        <!-- Stream list header -->
+        <Grid Grid.Row="3" Margin="0,20,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                <ui:TextBlock Text="Stream list"
+                              FontTypography="BodyStrong" />
+                <ui:TextBlock x:Name="StreamCountText"
+                              FontTypography="Body"
+                              Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                              Text="No stations yet." />
             </StackPanel>
-        </ScrollViewer>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <ui:Button Icon="{ui:SymbolIcon ArrowImport24}"
+                           Content="Import"
+                           ToolTip="Import stations"
+                           Margin="0,0,8,0"
+                           Click="ImportBtn_Click" />
+                <ui:Button Icon="{ui:SymbolIcon ArrowExportLtr24}"
+                           Content="Export"
+                           ToolTip="Export all stations"
+                           Click="ExportBtn_Click" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Stream list -->
+        <ui:Card Grid.Row="4" Padding="4" MinHeight="120" VerticalAlignment="Stretch">
+            <Grid>
+                <ui:ListView x:Name="RadioListBox"
+                             ItemsSource="{Binding RadioList}"
+                             SelectionMode="Single"
+                             MouseDoubleClick="RadioListBox_MouseDoubleClick">
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="{x:Type ui:ListViewItem}" BasedOn="{StaticResource {x:Type ui:ListViewItem}}">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="4,2,0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <ui:SymbolIcon Grid.Column="0"
+                                               Symbol="MusicNote220"
+                                               FontSize="20"
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,12,0" />
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <ui:TextBlock FontTypography="BodyStrong"
+                                                  TextTrimming="CharacterEllipsis"
+                                                  Text="{Binding Name}" />
+                                    <ui:TextBlock Text="{Binding Address}"
+                                                  FontTypography="Caption"
+                                                  Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                                  TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <ui:Button Icon="{ui:SymbolIcon ArrowUp24}"
+                                               Appearance="Transparent"
+                                               Padding="8,4"
+                                               ToolTip="Move up"
+                                               Tag="{Binding}"
+                                               Click="MoveUpBtn_Click" />
+                                    <ui:Button Icon="{ui:SymbolIcon ArrowDown24}"
+                                               Appearance="Transparent"
+                                               Padding="8,4"
+                                               ToolTip="Move down"
+                                               Tag="{Binding}"
+                                               Click="MoveDownBtn_Click" />
+                                    <ui:Button Icon="{ui:SymbolIcon Edit24}"
+                                               Appearance="Transparent"
+                                               Padding="8,4"
+                                               ToolTip="Edit this station"
+                                               Tag="{Binding}"
+                                               Click="EditBtn_Click" />
+                                    <ui:Button Icon="{ui:SymbolIcon Delete24}"
+                                               Appearance="Transparent"
+                                               Padding="8,4"
+                                               ToolTip="Remove this station"
+                                               Tag="{Binding}"
+                                               Click="RemoveBtn_Click" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ui:ListView>
+
+                <StackPanel x:Name="EmptyListPanel"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            IsHitTestVisible="False">
+                    <ui:SymbolIcon Symbol="MusicNoteOff224"
+                                   FontSize="32"
+                                   HorizontalAlignment="Center"
+                                   Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
+                    <ui:TextBlock Text="No stations added yet"
+                                  Margin="0,8,0,0"
+                                  FontTypography="BodyStrong"
+                                  HorizontalAlignment="Center"
+                                  Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                    <ui:TextBlock Text="Add your first stream below to get started."
+                                  FontTypography="Caption"
+                                  HorizontalAlignment="Center"
+                                  Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
+                </StackPanel>
+            </Grid>
+        </ui:Card>
+
+        <!-- Editor -->
+        <ui:Card Grid.Row="5" Margin="0,8,0,0">
+            <StackPanel>
+                <ui:TextBlock x:Name="EditorTitle"
+                              Text="Add a station"
+                              FontTypography="BodyStrong" />
+                <ui:TextBlock x:Name="EditorSubtitle"
+                              Text="Enter a name and the direct address of the stream."
+                              FontTypography="Body"
+                              Foreground="{DynamicResource TextFillColorTertiaryBrush}" />
+
+                <Grid Margin="0,12,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <ui:TextBox Grid.Column="0"
+                                x:Name="NameTextBox"
+                                PlaceholderText="Station name"
+                                Icon="{ui:SymbolIcon Tag24}"
+                                KeyDown="EditorField_KeyDown" />
+                    <ui:TextBox Grid.Column="1"
+                                x:Name="AddressTextBox"
+                                PlaceholderText="https://example.com/stream"
+                                Icon="{ui:SymbolIcon Link24}"
+                                Margin="8,0,0,0"
+                                KeyDown="EditorField_KeyDown" />
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="8,0,0,0">
+                        <ui:Button x:Name="CancelEditBtn"
+                                   Content="Cancel"
+                                   Visibility="Collapsed"
+                                   Margin="0,0,8,0"
+                                   Click="CancelEditBtn_Click" />
+                        <ui:Button x:Name="SaveRadioBtn"
+                                   Appearance="Primary"
+                                   Icon="{ui:SymbolIcon Add24}"
+                                   Content="Add station"
+                                   Click="SaveRadioBtn_Click" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </ui:Card>
+
+        <!-- Status messages -->
+        <ui:InfoBar x:Name="StatusInfoBar"
+                    Grid.Row="6"
+                    IsOpen="False"
+                    IsClosable="True"
+                    Margin="0,8,0,0" />
 
         <ui:TitleBar
             Title="WebRadio"
             ShowMaximize="False"
             ShowMinimize="False"
-            Grid.Row="0"/>
+            Margin="-16,0,-16,0"
+            Grid.Row="0">
+            <ui:TitleBar.Icon>
+                <ui:ImageIcon Source="pack://application:,,,/Assets/WebRadio.ico"/>
+            </ui:TitleBar.Icon>
+        </ui:TitleBar>
     </Grid>
 </ui:FluentWindow>

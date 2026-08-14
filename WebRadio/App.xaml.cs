@@ -1,7 +1,10 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using System;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls.Primitives;
+using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using WebRadio.Common;
 
@@ -40,8 +43,46 @@ namespace WebRadio
                 MinWidth = 330,
                 MaxWidth = 330
             };
-            tbIcon.TrayPopup = controlWindow; 
+            tbIcon.TrayPopup = controlWindow;
+            tbIcon.PopupActivation = PopupActivationMode.LeftOrRightClick;
+            tbIcon.PreviewTrayPopupOpen += TrayIcon_PreviewTrayPopupOpen;
             ShutdownMode = ShutdownMode.OnExplicitShutdown;
         }
+
+        private static void TrayIcon_PreviewTrayPopupOpen(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+            ShowPopupNextToTray();
+        }
+
+        private static void ShowPopupNextToTray()
+        {
+            if (tbIcon.TrayPopupResolved is not { Child: FrameworkElement content } popup) return;
+
+            content.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            var width = content.DesiredSize.Width > 0 ? content.DesiredSize.Width : content.ActualWidth;
+            var height = content.DesiredSize.Height > 0 ? content.DesiredSize.Height : content.ActualHeight;
+            var workArea = SystemParameters.WorkArea;
+            const double margin = 12;
+            var taskbarOnLeft = workArea.Left > 0;
+            var taskbarOnTop = workArea.Top > 0;
+
+            popup.Placement = PlacementMode.AbsolutePoint;
+            popup.HorizontalOffset = taskbarOnLeft
+                ? workArea.Left + margin
+                : workArea.Right - width - margin;
+            popup.VerticalOffset = taskbarOnTop
+                ? workArea.Top + margin
+                : workArea.Bottom - height - margin;
+            popup.IsOpen = true;
+
+            // Activate the popup so it closes again when the user clicks somewhere else.
+            if (PresentationSource.FromVisual(popup.Child) is HwndSource source)
+                SetForegroundWindow(source.Handle);
+        }
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
     }
 }

@@ -18,7 +18,11 @@
         <ui:TitleBar
             Title="WebRadio"
             ShowMaximize="False"
-            ShowMinimize="False"/>
+            ShowMinimize="False">
+            <ui:TitleBar.Icon>
+                <ui:ImageIcon Source="pack://application:,,,/Assets/WebRadio.ico"/>
+            </ui:TitleBar.Icon>
+        </ui:TitleBar>
 
         <Grid Margin="19,0,19,0">
             <Grid.RowDefinitions>

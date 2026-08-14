@@ -8,7 +8,7 @@
 <p align="center">
    <strong>Status: </strong>Maintained
    <br />
-   <strong>Version: </strong>1.0.0
+   <strong>Version: </strong>1.1.0
    <br />
    <a href="https://github.com/valnoxy/webradio/issues">Report Bug</a>
    ·
@@ -24,9 +24,10 @@ WebRadio is a small application for playing web radio channels or streams.
 
 - Play different radio streams and save them to the favorites list
 - Discord integration, so your friends can see what music you are listening too
+- Supports MP3 and M3U streams
 
 ## 🖼️ Screenshots
-<img src="https://dl.exploitox.de/webradio/WebRadio_Screenshot1.png" width="350"> <img src="https://dl.exploitox.de/webradio/WebRadio_Screenshot2.png" width="350">
+<img src="https://dl.exploitox.de/webradio/WebRadio_Screenshot3.png" width="300"> <img src="https://dl.exploitox.de/webradio/WebRadio_Screenshot4.png" width="500">
 
 ## 🙏 Libraries
 This project uses the following libraries:
@@ -51,7 +52,7 @@ GNU General Public License for more details.
 
 ---
 
-<h6 align="center">© 2018 - 2023 valnoxy. All Rights Reserved. 
+<h6 align="center">© 2018 - 2026 Exploitox (valnoxy). All Rights Reserved. 
 <br>
 By Jonas Günner &lt;jonas@exploitox.de&gt;</h6>
 <p align="center">

@@ -20,6 +20,7 @@ namespace WebRadio
         public MessageUi(string title, string message, string? btn1 = null, string? btn2 = null, bool isMainThread = false)
         {
             InitializeComponent();
+            _buttonPressed = null;
 
             MessageTitle.Text = title;
             MessageText.Text = message;

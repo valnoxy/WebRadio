@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 
 namespace WebRadio.Common
@@ -9,14 +11,35 @@ namespace WebRadio.Common
     {
         public bool AutoStart { get; set; }
         public bool DiscordRPC { get; set; }
-        public List<Radio> RadioList { get; set; }
-        public double Volume { get; set; }
+        public ObservableCollection<Radio> RadioList { get; set; } = new();
+        public double Volume { get; set; } = 100;
     }
 
-    public class Radio
+    public class Radio : INotifyPropertyChanged
     {
-        public string Name { get; set; }
-        public string Address { get; set; }
+        private string _name = string.Empty;
+        private string _address = string.Empty;
+
+        public string Name
+        {
+            get => _name;
+            set => SetField(ref _name, value);
+        }
+
+        public string Address
+        {
+            get => _address;
+            set => SetField(ref _address, value);
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void SetField(ref string field, string value, [CallerMemberName] string? propertyName = null)
+        {
+            if (field == value) return;
+            field = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     public class ConfigManager
@@ -39,6 +62,7 @@ namespace WebRadio.Common
                     {
                         var jsonContent = File.ReadAllText(ConfigFile);
                         Config = JsonConvert.DeserializeObject<Configuration>(jsonContent)!;
+                        Config.RadioList ??= new ObservableCollection<Radio>();
 
                         if (Config.DiscordRPC)
                         {
@@ -53,7 +77,7 @@ namespace WebRadio.Common
                 }
                 else
                 {
-                    ConfigManager.Config.RadioList = new List<Radio>();
+                    Config.RadioList = new ObservableCollection<Radio>();
                 }
             }
             catch
